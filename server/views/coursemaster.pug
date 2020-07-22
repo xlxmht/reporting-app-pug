@@ -1,0 +1,43 @@
+extend layout
+
+block content
+  div(class="row")
+    div(class="col-lg-12 col-md-12")
+      div(class="text-left")
+        h1(class="h4 text-gray-900 mb-4") Create Course
+      form(class="user course-form" action="/api/coursemaster" method="POST")
+        div(class="form-group row")
+          div(class="col-sm-4 mb-3 mb-sm-0")
+            input( type="text" class="form-control" id="input-course-code" placeholder="Course Code" name="code")
+          div(class="col-sm-4")
+            input( type="text" class="form-control" id="input-course-name" placeholder="Course Name" name="name")
+          div(class="col-sm-4 course-form-buttons")
+            button(class="btn btn-primary") Submit
+            button(class="btn btn-primary" style="display: none") Update
+            button(class="btn btn-default" id="course-form-cancel") Cancel
+
+  div(class="row")
+    div(class="col-md-12")
+      div(class="card shadow mb-4")
+        div(class="card-header py-3")
+          h6(class="m-0 font-weight-bold text-primary") Course List
+
+        div(class="card-body")
+          div(class="table-responsive")
+            table( class="table table-bordered" id="courseListTable" width="100%" cellspacing="0")
+              thead
+                tr
+                  th Course Code
+                  th Course Name
+                  th(colspan="2" style="text-align: center") Action
+              tbody
+                each course in courses
+                  tr
+                    td(style="display: none" id="course-id")= course._id
+                    td= course.code
+                    td= course.name
+                    td(style="text-align: center")
+                      a(href="javascript:void(0);")
+                        i(class="fas fa-fw fa-pencil-alt" class="edit-course" data-for= course._id)
+                    td(style="text-align: center")
+                      i(class="fas fa-trash fa-trash-alt" class="delete-course")

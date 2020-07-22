@@ -1,0 +1,40 @@
+extend layout
+
+block content
+  div(class="row" style="justify-content: center")
+    div(class="col-lg-7")
+      div(class="p-5")
+        div(class="text-center")
+          h1(class="h4 text-gray-900 mb-4") Register New Student
+        form(class="user student__form" action=(!isEdit ? "/api/studentmaster": `/api/studentmaster/${studentObj._id}`) method="POST")
+          div(class="form-group")
+            if !isEdit
+              input(type="text" class="form-control" name="name" placeholder="Name")
+            else
+              input(type="text" class="form-control" name="name" value=`${studentObj.name}` placeholder="Name")
+
+          div(class="form-group row")
+            div(class="col-sm-6 mb-3 mb-sm-0")
+              select(class="form-control" name="gender")
+                option(value="" disable) Gender
+                  each gender in ["Male", "Female"]
+                    option(value=`${gender}` selected=(isEdit && studentObj.gender === gender))= gender
+            div(class="col-sm-6")            
+              select(class="form-control" name="course")
+                option(value="") Course
+                each course in courses
+                  option(value=`${course.name}` selected=(isEdit && studentObj.course === course.name))= course.name
+          div(class="form-group")
+            if !isEdit
+              input(type="email" class="form-control" name="email" placeholder="Email Address")
+            else
+              input(type="email" class="form-control" name="email" value=`${studentObj.email}` placeholder="Email Address")
+          hr
+          div(class="row")
+            div(class="col-md-6")
+              if !isEdit
+                button(class="btn btn-primary btn-block") Submit
+              else
+                button(class="btn btn-primary btn-block") Update
+            div(class="col-md-6")
+              a(href="/studentlist" class="btn btn-default btn-block") Cancel
