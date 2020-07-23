@@ -3,7 +3,11 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-require('dotenv').config();
+const envConfig = require('dotenv').config();
+if(envConfig.error) {
+  console.log("ERROR: Missing env config!")
+  process.exit(-1);
+}
 
 const CourseCtrl = require("./api/course/course.controller");
 const StudentCtrl = require("./api/student/student.controller");
@@ -15,7 +19,7 @@ app.set('views', path.join(__dirname, "views"));
 app.use(express.static(__dirname + '/assets'));
 
 app.get("/", (req, res) => {
-  res.send("Voila, Welcome to the world of APIs");
+  res.redirect("/coursemaster");
 });
 
 app.use("/api/coursemaster", require("./api/course"));
