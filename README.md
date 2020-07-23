@@ -2,4 +2,4 @@
 
 Pug based basic CRUD application.
 
-localhost:2020
+- localhost:2020
